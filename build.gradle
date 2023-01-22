@@ -19,16 +19,25 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.testcontainers:junit-jupiter:1.17.6"
-	testImplementation "org.testcontainers:mongodb:1.17.6"
 	implementation "com.google.code.gson:gson"
+	implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.892'
+	implementation group: 'com.github.derjust', name: 'spring-data-dynamodb', version: '5.1.0'
 }
 
+ext {
+	springDataVersion = 'Neumann-SR5'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.data:spring-data-releasetrain:${springDataVersion}"
+	}
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }
